@@ -5,9 +5,9 @@ import './styles/nav-hero.css';
 import './styles/sections.css';
 import './styles/pages.css';
 
-import Loader from './components/Loader';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Loader from './components/ui/Loader';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';

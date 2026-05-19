@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
-import EncryptedText from '../components/EncryptedText';
-import CometCard from '../components/CometCard';
+import EncryptedText from '../components/ui/EncryptedText';
+import CometCard from '../components/ui/CometCard';
 
 const SERVICES = [
   { icon: '⚡', title: 'Custom Software', desc: 'Bespoke applications engineered for your unique business challenges, built to scale from day one.' },
