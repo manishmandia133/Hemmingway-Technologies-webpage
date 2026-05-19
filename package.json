@@ -2,9 +2,9 @@
   "name": "hemmingway-technologies",
   "private": true,
   "scripts": {
-    "install-frontend": "cd Frontend && npm install",
-    "build": "cd Frontend && npm run build",
-    "dev": "cd Frontend && npm run dev",
-    "preview": "cd Frontend && npm run preview"
+    "build": "npm install --prefix Frontend && npm run build --prefix Frontend",
+    "dev": "npm run dev --prefix Frontend",
+    "preview": "npm run preview --prefix Frontend"
   }
 }
+
