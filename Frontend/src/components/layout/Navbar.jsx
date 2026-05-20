@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Rocket, Brain, Cloud, Lock, Moon, Sun } from 'lucide-react';
 
 /* ─────────────────────────────────────────
    Aceternity-style dropdown components
@@ -21,7 +22,7 @@ function HoveredLink({ href, to, children }) {
   return <a href={href} style={style} onMouseEnter={onEnter} onMouseLeave={onLeave}>{children}</a>;
 }
 
-function ProductItem({ title, description, href, emoji }) {
+function ProductItem({ title, description, href, Icon }) {
   return (
     <a
       href={href}
@@ -31,7 +32,7 @@ function ProductItem({ title, description, href, emoji }) {
       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
     >
       <div style={{ width: 40, height: 40, borderRadius: '10px', background: 'var(--primary-light)', border: '1px solid rgba(99,103,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
-        {emoji}
+        <Icon size={24} />
       </div>
       <div>
         <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-bright)', marginBottom: 3 }}>{title}</div>
@@ -110,7 +111,7 @@ function ThemeToggle({ theme, toggle }) {
     <button className="theme-toggle" onClick={toggle} aria-label="Toggle theme">
       <span className="theme-toggle-track">
         <span className="theme-toggle-thumb" />
-        <span className="theme-icon">{theme === 'dark' ? '🌙' : '☀️'}</span>
+        <span className="theme-icon">{theme === 'dark' ? <Moon size={16} /> : <Sun size={16} />}</span>
       </span>
     </button>
   );
@@ -151,52 +152,24 @@ export default function Navbar({ theme, toggleTheme }) {
 
           {/* ── CENTER: Aceternity-style menu ── */}
           <div className="nav-menu-center">
-            <MenuItem label="Services" active={activeMenu} setActive={setActiveMenu}>
-              <div className="dropdown-cols-2">
-                <div>
-                  <div className="dropdown-section-label">What We Build</div>
-                  <HoveredLink to="/#services">Custom Software</HoveredLink>
-                  <HoveredLink to="/#services">AI & Machine Learning</HoveredLink>
-                  <HoveredLink to="/#services">Cloud Architecture</HoveredLink>
-                  <HoveredLink to="/#services">Cybersecurity</HoveredLink>
-                </div>
-                <div>
-                  <div className="dropdown-section-label">Platforms</div>
-                  <HoveredLink to="/#services">Mobile & Web Apps</HoveredLink>
-                  <HoveredLink to="/#services">API Integration</HoveredLink>
-                  <HoveredLink to="/#services">Data Analytics</HoveredLink>
-                  <HoveredLink to="/#services">DevOps & Cloud</HoveredLink>
-                </div>
-              </div>
-            </MenuItem>
+            <NavLink to="/" label="Home" isActive={isActive('/')} />
+            <NavLink to="/about" label="About" isActive={isActive('/about')} />
+            <NavLink to="/team" label="Team" isActive={isActive('/team')} />
+            <NavLink to="/blog" label="Blog" isActive={isActive('/blog')} />
 
             <MenuItem label="Solutions" active={activeMenu} setActive={setActiveMenu}>
               <div className="dropdown-products">
-                <ProductItem emoji="🚀" title="Launchpad" description="From idea to production-ready MVP in 6 weeks." href="#" />
-                <ProductItem emoji="🧠" title="AI Suite" description="Custom LLM integrations & intelligent automation." href="#" />
-                <ProductItem emoji="☁️" title="CloudOps" description="Managed cloud infrastructure at enterprise scale." href="#" />
-                <ProductItem emoji="🔐" title="SecureStack" description="Full-stack security audit & hardening service." href="#" />
+                <ProductItem Icon={Rocket} title="Launchpad" description="From idea to production-ready MVP in 6 weeks." href="#" />
+                <ProductItem Icon={Brain} title="AI Suite" description="Custom LLM integrations & intelligent automation." href="#" />
+                <ProductItem Icon={Cloud} title="CloudOps" description="Managed cloud infrastructure at enterprise scale." href="#" />
+                <ProductItem Icon={Lock} title="SecureStack" description="Full-stack security audit & hardening service." href="#" />
               </div>
             </MenuItem>
-
-            <MenuItem label="Company" active={activeMenu} setActive={setActiveMenu}>
-              <div>
-                <div className="dropdown-section-label">Who We Are</div>
-                <HoveredLink to="/about">About Us</HoveredLink>
-                <HoveredLink to="/team">Our Team</HoveredLink>
-                <HoveredLink to="/blog">Blog</HoveredLink>
-                <HoveredLink href="#">Careers</HoveredLink>
-                <HoveredLink href="#">Press Kit</HoveredLink>
-              </div>
-            </MenuItem>
-
-            <NavLink to="/" label="Home" isActive={isActive('/')} />
           </div>
 
           {/* ── RIGHT ── */}
           <div className="nav-cta">
             <ThemeToggle theme={theme} toggle={toggleTheme} />
-            <Link to="/contact" className="nav-btn ghost">Contact</Link>
             <Link to="/contact" className="nav-btn primary">
               Get in Touch
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>

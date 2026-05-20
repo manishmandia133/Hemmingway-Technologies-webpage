@@ -35,34 +35,38 @@ export function useParallax(ref, speed = 0.3) {
   }, [ref, speed]);
 }
 
-// useGSAPReveal — stagger animation using GSAP
-export function useGSAPReveal(containerRef) {
+// useGSAPReveal — stagger animation using GSAP (re-runs when dependencies change)
+export function useGSAPReveal(containerRef, dependencies = []) {
   useEffect(() => {
-    let gsap, ScrollTrigger;
-    import('gsap').then((g) => {
-      gsap = g.gsap || g.default;
-      import('gsap/ScrollTrigger').then((st) => {
-        ScrollTrigger = st.ScrollTrigger;
-        gsap.registerPlugin(ScrollTrigger);
-        if (!containerRef.current) return;
-        const items = containerRef.current.querySelectorAll('[data-reveal]');
-        if (!items.length) return;
-        gsap.fromTo(
-          items,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            stagger: 0.12,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: 'top 80%',
-            },
-          }
-        );
+    const animateItems = async () => {
+      const { gsap: gsapModule } = await import('gsap');
+      const gsap = gsapModule.default || gsapModule;
+      
+      if (!containerRef.current) return;
+      const items = containerRef.current.querySelectorAll('[data-reveal]');
+      if (!items.length) return;
+      
+      // Wait for next frame to ensure DOM is fully updated
+      return new Promise(resolve => {
+        requestAnimationFrame(() => {
+          // Reset all items to initial state
+          gsap.set(items, { y: 50, opacity: 0 });
+          
+          // Animate them in on the next frame
+          requestAnimationFrame(() => {
+            gsap.to(items, {
+              y: 0,
+              opacity: 1,
+              duration: 0.9,
+              stagger: 0.12,
+              ease: 'power3.out',
+              onComplete: resolve,
+            });
+          });
+        });
       });
-    });
-  }, [containerRef]);
+    };
+    
+    animateItems();
+  }, [containerRef, ...dependencies]);
 }

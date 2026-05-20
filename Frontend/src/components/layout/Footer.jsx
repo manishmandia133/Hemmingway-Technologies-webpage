@@ -6,18 +6,18 @@ const COLS = [
     links: [
       { label: 'Home', to: '/' },
       { label: 'About', to: '/about' },
+      { label: 'Team', to: '/team' },
       { label: 'Contact', to: '/contact' },
-      { label: 'Pricing', href: '#' },
-      { label: 'Blog', href: '#' },
+      { label: 'Blog', to: '/blog' },
     ],
   },
   {
     title: 'Socials',
     links: [
-      { label: 'LinkedIn', href: '#' },
-      { label: 'Twitter / X', href: '#' },
-      { label: 'GitHub', href: '#' },
-      { label: 'Instagram', href: '#' },
+      { label: 'LinkedIn', href: 'https://linkedin.com' },
+      { label: 'Twitter', href: 'https://twitter.com' },
+      { label: 'GitHub', href: 'https://github.com' },
+      { label: 'Instagram', href: 'https://instagram.com' },
     ],
   },
   {
@@ -68,9 +68,11 @@ export default function Footer() {
               <ul>
                 {col.links.map(link => (
                   <li key={link.label}>
-                    {link.to
-                      ? <Link to={link.to} className="ftr-link">{link.label}</Link>
-                      : <a href={link.href} className="ftr-link">{link.label}</a>}
+                    {link.to ? (
+                      <Link to={link.to} className="ftr-link">{link.label}</Link>
+                    ) : (
+                      <a href={link.href} className="ftr-link" target="_blank" rel="noopener noreferrer">{link.label}</a>
+                    )}
                   </li>
                 ))}
               </ul>

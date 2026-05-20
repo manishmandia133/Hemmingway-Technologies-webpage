@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CheckCircle } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useAnimations';
 
 export default function Contact() {
@@ -85,7 +86,7 @@ export default function Contact() {
             <div className="contact-form fade-up" style={{ transitionDelay: '0.2s' }}>
               {submitted ? (
                 <div className="form-success show">
-                  <div className="form-success-icon">✅</div>
+                  <div className="form-success-icon"><CheckCircle size={48} /></div>
                   <h3>Message Sent!</h3>
                   <p>Thanks {form.name}! We've received your message and will be in touch within one business day.</p>
                   <button

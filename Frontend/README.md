@@ -2,7 +2,7 @@
 
 Modern, responsive website for Hemmingway Technologies. Built with React, Vite, and cutting-edge web technologies.
 
-## 🚀 Features
+## Features
 
 - **Modern Stack**: React 18 + Vite + TailwindCSS
 - **Responsive Design**: Mobile-first approach, works on all devices
@@ -12,7 +12,7 @@ Modern, responsive website for Hemmingway Technologies. Built with React, Vite, 
 - **Performance**: Optimized bundle size, lazy loading
 - **Accessible**: WCAG compliance standards
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Frontend/
@@ -45,7 +45,7 @@ Frontend/
 └── README.md
 ```
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Node.js 16+ 
@@ -79,7 +79,7 @@ npm run build
 npm run preview
 ```
 
-## 📄 Pages
+## Pages
 
 ### Home (`/`)
 Landing page with hero section, services showcase, testimonials, and CTA sections.
@@ -148,7 +148,7 @@ VITE_APP_NAME=Hemmingway Technologies
 - **vite**: Build tool
 - **eslint**: Code linting
 
-## 🚀 Deployment
+## Deployment
 
 ### Vercel / Netlify
 ```bash
@@ -233,7 +233,7 @@ For issues or questions:
 - Create new issue with details
 - Contact development team
 
-## 📄 License
+## License
 
 Proprietary - Hemmingway Technologies
 

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { Briefcase, Code, Palette, Cog } from 'lucide-react';
 import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
 import EncryptedText from '../components/ui/EncryptedText';
 import CometCard from '../components/ui/CometCard';
@@ -12,10 +13,10 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { name: 'Alex Hemmingway', role: 'Founder & CEO', emoji: '👨‍💼' },
-  { name: 'Natasha Voss', role: 'CTO', emoji: '👩‍💻' },
-  { name: 'James Park', role: 'Head of Design', emoji: '🎨' },
-  { name: 'Layla Osei', role: 'Engineering Lead', emoji: '⚙️' },
+  { name: 'Alex Hemmingway', role: 'Founder & CEO', Icon: Briefcase },
+  { name: 'Natasha Voss', role: 'CTO', Icon: Code },
+  { name: 'James Park', role: 'Head of Design', Icon: Palette },
+  { name: 'Layla Osei', role: 'Engineering Lead', Icon: Cog },
 ];
 
 export default function About() {
@@ -26,15 +27,15 @@ export default function About() {
   return (
     <>
       {/* ── PAGE HERO ── */}
-      <section className="page-hero">
+      <section className="page-hero" style={{ backgroundImage: 'url("/bg-hero.png")' }}>
         <div className="page-hero-glow" />
         <div className="container">
-          <div className="tag fade-in visible">About Us</div>
-          <h1 className="fade-up visible">
+          <div className="tag">About Us</div>
+          <h1>
             We exist to make<br />
             <span className="gradient-text">great software</span>
           </h1>
-          <p className="fade-up visible" style={{ transitionDelay: '0.15s' }}>
+          <p>
             Founded in 2012, Hemmingway Technologies has grown from a two-person consultancy into a 40-person engineering powerhouse — united by a single obsession: building software that actually matters.
           </p>
         </div>
@@ -46,7 +47,7 @@ export default function About() {
           <div className="about-story-inner">
             <div className="about-story-img fade-in">
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhbSUyMGF0JTIwd29ya3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
                 alt="Hemmingway Technologies team at work"
               />
               <div className="about-story-img-frame" />
@@ -102,13 +103,16 @@ export default function About() {
             <p>A passionate team of engineers, designers, and strategists obsessed with craft.</p>
           </div>
           <div className="team-grid">
-            {TEAM.map((member, i) => (
-              <div key={i} className="team-card fade-up" style={{ transitionDelay: `${i * 0.1}s` }}>
-                <div className="team-card-img">{member.emoji}</div>
-                <div className="team-name">{member.name}</div>
-                <div className="team-role">{member.role}</div>
-              </div>
-            ))}
+            {TEAM.map((member, i) => {
+              const IconComponent = member.Icon;
+              return (
+                <div key={i} className="team-card fade-up" style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <div className="team-card-img"><IconComponent size={32} /></div>
+                  <div className="team-name">{member.name}</div>
+                  <div className="team-role">{member.role}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -122,7 +126,7 @@ export default function About() {
             <p>We're always looking for talented engineers, designers, and strategists who share our values.</p>
             <div className="cta-buttons">
               <Link to="/contact" className="btn-primary">Get in Touch</Link>
-              <a href="mailto:careers@hemmingway.tech" className="btn-ghost">View Careers</a>
+              {/* <a href="mailto:careers@hemmingway.tech" className="btn-ghost">View Careers</a> */}
             </div>
           </div>
         </div>

@@ -1,16 +1,17 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { Zap, Brain, Cloud, Lock, Smartphone, Link as LinkIcon, BarChart3, Bot, Globe } from 'lucide-react';
 import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
 import EncryptedText from '../components/ui/EncryptedText';
 import CometCard from '../components/ui/CometCard';
 
 const SERVICES = [
-  { icon: '⚡', title: 'Custom Software', desc: 'Bespoke applications engineered for your unique business challenges, built to scale from day one.' },
-  { icon: '🧠', title: 'AI & Machine Learning', desc: 'Intelligent systems that learn, adapt, and make data-driven decisions — transforming your operations.' },
-  { icon: '☁️', title: 'Cloud Architecture', desc: 'Scalable, resilient cloud infrastructure designed for 99.99% uptime and global performance.' },
-  { icon: '🔐', title: 'Cybersecurity', desc: 'Enterprise-grade security solutions protecting your data, users, and business continuity.' },
-  { icon: '📱', title: 'Mobile & Web', desc: 'Beautiful, performant applications across every platform — web, iOS, and Android.' },
-  { icon: '🔗', title: 'API & Integrations', desc: 'Seamless connectivity between your tools, platforms, and third-party services.' },
+  { Icon: Zap, title: 'Custom Software', desc: 'Bespoke applications engineered for your unique business challenges, built to scale from day one.' },
+  { Icon: Brain, title: 'AI & Machine Learning', desc: 'Intelligent systems that learn, adapt, and make data-driven decisions — transforming your operations.' },
+  { Icon: Cloud, title: 'Cloud Architecture', desc: 'Scalable, resilient cloud infrastructure designed for 99.99% uptime and global performance.' },
+  { Icon: Lock, title: 'Cybersecurity', desc: 'Enterprise-grade security solutions protecting your data, users, and business continuity.' },
+  { Icon: Smartphone, title: 'Mobile & Web', desc: 'Beautiful, performant applications across every platform — web, iOS, and Android.' },
+  { Icon: LinkIcon, title: 'API & Integrations', desc: 'Seamless connectivity between your tools, platforms, and third-party services.' },
 ];
 
 const TESTIMONIALS = [
@@ -29,9 +30,15 @@ const TESTIMONIALS = [
 ];
 
 const MARQUEE_ITEMS = [
-  '⚡ Custom Software', '🧠 Artificial Intelligence', '☁️ Cloud Solutions',
-  '🔐 Cybersecurity', '📱 Mobile Apps', '🔗 API Integration',
-  '📊 Data Analytics', '🤖 Process Automation', '🌐 Web Platforms',
+  { Icon: Zap, text: 'Custom Software' },
+  { Icon: Brain, text: 'Artificial Intelligence' },
+  { Icon: Cloud, text: 'Cloud Solutions' },
+  { Icon: Lock, text: 'Cybersecurity' },
+  { Icon: Smartphone, text: 'Mobile Apps' },
+  { Icon: LinkIcon, text: 'API Integration' },
+  { Icon: BarChart3, text: 'Data Analytics' },
+  { Icon: Bot, text: 'Process Automation' },
+  { Icon: Globe, text: 'Web Platforms' },
 ];
 
 export default function Home() {
@@ -49,21 +56,21 @@ export default function Home() {
         <div className="hero-overlay" />
         <div className="hero-glow" />
         <div className="hero-content container">
-          <div className="hero-badge fade-in visible">
+          <div className="hero-badge">
             <span />
             Now Available — Enterprise Plans
           </div>
-          <h1 className="fade-up visible">
+          <h1>
             Software That<br />
             <span className="gradient-text">Moves the World</span>
           </h1>
-          <p className="hero-sub fade-up visible" style={{ transitionDelay: '0.15s' }}>
+          <p className="hero-sub">
             <EncryptedText
               text="We build transformative digital products — from AI platforms to cloud-native infrastructure — for companies that refuse to stand still."
               speed={20}
             />
           </p>
-          <div className="hero-cta fade-up visible" style={{ transitionDelay: '0.3s' }}>
+          <div className="hero-cta">
             <Link to="/contact" className="btn-primary">
               Start a Project
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -78,13 +85,16 @@ export default function Home() {
         <div className="marquee-track">
           {[0, 1].map((i) => (
             <div key={i} className="marquee-inner">
-              {MARQUEE_ITEMS.map((item, j) => (
-                <div key={j} className="marquee-item">
-                  <span>{item.split(' ')[0]}</span>
-                  {item.split(' ').slice(1).join(' ')}
-                  {j < MARQUEE_ITEMS.length - 1 && <span style={{ margin: '0 12px', opacity: 0.2 }}>·</span>}
-                </div>
-              ))}
+              {MARQUEE_ITEMS.map((item, j) => {
+                const IconComponent = item.Icon;
+                return (
+                  <div key={j} className="marquee-item">
+                    <IconComponent size={18} style={{ display: 'inline-block', marginRight: '8px' }} />
+                    {item.text}
+                    {j < MARQUEE_ITEMS.length - 1 && <span style={{ margin: '0 12px', opacity: 0.2 }}>·</span>}
+                  </div>
+                );
+              })}
             </div>
           ))}
         </div>
@@ -99,13 +109,16 @@ export default function Home() {
             <p>From concept to deployment, we handle every layer of your digital stack with precision and craft.</p>
           </div>
           <div className="services-grid" style={{ marginTop: '64px' }}>
-            {SERVICES.map((s, i) => (
-              <div key={i} className="service-card" data-reveal style={{ transitionDelay: `${i * 0.1}s` }}>
-                <div className="service-icon">{s.icon}</div>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-              </div>
-            ))}
+            {SERVICES.map((s, i) => {
+              const IconComponent = s.Icon;
+              return (
+                <div key={i} className="service-card" data-reveal style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <div className="service-icon"><IconComponent size={32} /></div>
+                  <h3>{s.title}</h3>
+                  <p>{s.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

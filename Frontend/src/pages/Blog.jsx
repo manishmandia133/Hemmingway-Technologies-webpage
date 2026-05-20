@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
+import { Bot, Zap, Lock, Palette, Database, Rocket } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useAnimations';
 
 const BLOG_POSTS = [
   {
@@ -10,7 +11,7 @@ const BLOG_POSTS = [
     author: 'Natasha Voss',
     date: '2024-12-01',
     readTime: '8 min read',
-    emoji: '🤖',
+    Icon: Bot,
     tags: ['AI', 'Performance', 'Architecture']
   },
   {
@@ -21,7 +22,7 @@ const BLOG_POSTS = [
     author: 'Marcus Chen',
     date: '2024-11-28',
     readTime: '10 min read',
-    emoji: '⚡',
+    Icon: Zap,
     tags: ['React', 'Performance', 'Bundling']
   },
   {
@@ -32,7 +33,7 @@ const BLOG_POSTS = [
     author: 'Elena Rodriguez',
     date: '2024-11-15',
     readTime: '12 min read',
-    emoji: '🔐',
+    Icon: Lock,
     tags: ['Security', 'Microservices', 'DevOps']
   },
   {
@@ -43,7 +44,7 @@ const BLOG_POSTS = [
     author: 'James Park',
     date: '2024-11-01',
     readTime: '7 min read',
-    emoji: '🎨',
+    Icon: Palette,
     tags: ['Design', 'System Design', 'Collaboration']
   },
   {
@@ -54,7 +55,7 @@ const BLOG_POSTS = [
     author: 'Layla Osei',
     date: '2024-10-25',
     readTime: '9 min read',
-    emoji: '🗄️',
+    Icon: Database,
     tags: ['Database', 'SQL', 'Performance']
   },
   {
@@ -65,7 +66,7 @@ const BLOG_POSTS = [
     author: 'Alex Hemmingway',
     date: '2024-10-10',
     readTime: '11 min read',
-    emoji: '🚀',
+    Icon: Rocket,
     tags: ['Full Stack', 'Architecture', 'Future Tech']
   },
 ];
@@ -76,7 +77,6 @@ export default function Blog() {
   useScrollReveal();
   const gridRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  useGSAPReveal(gridRef);
 
   const filteredPosts = selectedCategory === 'All'
     ? BLOG_POSTS
@@ -106,29 +106,32 @@ export default function Blog() {
       <section className="blog-section">
         <div className="container">
           <div ref={gridRef} className="blog-grid">
-            {filteredPosts.map((post, i) => (
-              <article key={post.id} className="blog-card fade-up" style={{ transitionDelay: `${i * 0.08}s` }}>
-                <div className="blog-card-header">
-                  <span className="blog-emoji">{post.emoji}</span>
-                  <span className="blog-category">{post.category}</span>
-                </div>
-                <h3 className="blog-title">{post.title}</h3>
-                <p className="blog-excerpt">{post.excerpt}</p>
-                <div className="blog-tags">
-                  {post.tags.map(tag => (
-                    <span key={tag} className="blog-tag">{tag}</span>
-                  ))}
-                </div>
-                <div className="blog-footer">
-                  <div className="blog-meta">
-                    <span className="blog-author">{post.author}</span>
-                    <span className="blog-date">{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                    <span className="blog-read-time">{post.readTime}</span>
+            {filteredPosts.map((post, i) => {
+              const IconComponent = post.Icon;
+              return (
+                <article key={post.id} className="blog-card fade-up" style={{ transitionDelay: `${i * 0.08}s` }}>
+                  <div className="blog-card-header">
+                    <span className="blog-emoji"><IconComponent size={24} /></span>
+                    <span className="blog-category">{post.category}</span>
                   </div>
-                  <a href={`#blog/${post.id}`} className="blog-link">Read →</a>
-                </div>
-              </article>
-            ))}
+                  <h3 className="blog-title">{post.title}</h3>
+                  <p className="blog-excerpt">{post.excerpt}</p>
+                  <div className="blog-tags">
+                    {post.tags.map(tag => (
+                      <span key={tag} className="blog-tag">{tag}</span>
+                    ))}
+                  </div>
+                  <div className="blog-footer">
+                    <div className="blog-meta">
+                      <span className="blog-author">{post.author}</span>
+                      <span className="blog-date">{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                      <span className="blog-read-time">{post.readTime}</span>
+                    </div>
+                    <a href={`#blog/${post.id}`} className="blog-link">Read →</a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
           {filteredPosts.length === 0 && (
             <div className="blog-empty">
