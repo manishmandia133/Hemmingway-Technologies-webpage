@@ -13,10 +13,27 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Team from './pages/Team';
 import Blog from './pages/Blog';
+import Services from './pages/Services';
+import Solutions from './pages/Solutions';
+import Careers from './pages/Careers';
+import PressKit from './pages/PressKit';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    const { hash } = window.location;
+    if (hash) {
+      setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
   return null;
 }
 
@@ -33,6 +50,10 @@ function AppContent({ theme, toggleTheme }) {
           <Route path="/team" element={<Team />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/solutions" element={<Solutions />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/press-kit" element={<PressKit />} />
         </Routes>
       </main>
       <Footer />

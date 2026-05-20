@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 // useScrollReveal — triggers .visible class when elements enter viewport
 export function useScrollReveal() {
@@ -8,10 +8,18 @@ export function useScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            // Optional: stop observing once revealed for better performance
+            // observer.unobserve(entry.target);
+          } else {
+            // Re-trigger animation on scroll back up
+            const rect = entry.target.getBoundingClientRect();
+            if (rect.top > window.innerHeight) {
+               entry.target.classList.remove('visible');
+            }
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
 
     const elements = document.querySelectorAll('.fade-up, .fade-in');
@@ -26,9 +34,16 @@ export function useParallax(ref, speed = 0.3) {
   useEffect(() => {
     const el = ref?.current;
     if (!el) return;
+    let ticking = false;
     const handleScroll = () => {
-      const y = window.scrollY * speed;
-      el.style.transform = `translateY(${y}px)`;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const y = window.scrollY * speed;
+          el.style.transform = `translateY(${y}px)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -49,16 +64,18 @@ export function useGSAPReveal(containerRef) {
         if (!items.length) return;
         gsap.fromTo(
           items,
-          { y: 50, opacity: 0 },
+          { y: 60, opacity: 0, scale: 0.95 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.9,
-            stagger: 0.12,
-            ease: 'power3.out',
+            scale: 1,
+            duration: 1,
+            stagger: 0.1,
+            ease: 'power4.out',
             scrollTrigger: {
               trigger: containerRef.current,
-              start: 'top 80%',
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
             },
           }
         );

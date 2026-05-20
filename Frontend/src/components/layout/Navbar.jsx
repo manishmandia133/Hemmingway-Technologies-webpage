@@ -73,7 +73,10 @@ function useEncrypt(text, active) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const raf = useRef(null);
   useEffect(() => {
-    if (!active) { setDisplay(text); return; }
+    if (!active) {
+      setTimeout(() => setDisplay(text), 0);
+      return;
+    }
     let iter = 0;
     const step = () => {
       setDisplay(text.split('').map((c, i) => c === ' ' ? ' ' : i < iter ? text[i] : chars[Math.floor(Math.random() * chars.length)]).join(''));
@@ -131,7 +134,13 @@ export default function Navbar({ theme, toggleTheme }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); setActiveMenu(null); window.scrollTo(0, 0); }, [location.pathname]);
+  useEffect(() => {
+    const handleNavigation = () => {
+      setMobileOpen(false);
+      setActiveMenu(null);
+    };
+    setTimeout(handleNavigation, 0);
+  }, [location.pathname]);
 
   const isActive = p => location.pathname === p;
 
@@ -155,27 +164,27 @@ export default function Navbar({ theme, toggleTheme }) {
               <div className="dropdown-cols-2">
                 <div>
                   <div className="dropdown-section-label">What We Build</div>
-                  <HoveredLink to="/#services">Custom Software</HoveredLink>
-                  <HoveredLink to="/#services">AI & Machine Learning</HoveredLink>
-                  <HoveredLink to="/#services">Cloud Architecture</HoveredLink>
-                  <HoveredLink to="/#services">Cybersecurity</HoveredLink>
+                  <HoveredLink to="/services#custom-software">Custom Software</HoveredLink>
+                  <HoveredLink to="/services#ai-ml">AI & Machine Learning</HoveredLink>
+                  <HoveredLink to="/services#cloud-architecture">Cloud Architecture</HoveredLink>
+                  <HoveredLink to="/services#cybersecurity">Cybersecurity</HoveredLink>
                 </div>
                 <div>
                   <div className="dropdown-section-label">Platforms</div>
-                  <HoveredLink to="/#services">Mobile & Web Apps</HoveredLink>
-                  <HoveredLink to="/#services">API Integration</HoveredLink>
-                  <HoveredLink to="/#services">Data Analytics</HoveredLink>
-                  <HoveredLink to="/#services">DevOps & Cloud</HoveredLink>
+                  <HoveredLink to="/services#mobile-web">Mobile & Web Apps</HoveredLink>
+                  <HoveredLink to="/services#api-integration">API Integration</HoveredLink>
+                  <HoveredLink to="/services#data-analytics">Data Analytics</HoveredLink>
+                  <HoveredLink to="/services#devops-cloud">DevOps & Cloud</HoveredLink>
                 </div>
               </div>
             </MenuItem>
 
             <MenuItem label="Solutions" active={activeMenu} setActive={setActiveMenu}>
               <div className="dropdown-products">
-                <ProductItem emoji="🚀" title="Launchpad" description="From idea to production-ready MVP in 6 weeks." href="#" />
-                <ProductItem emoji="🧠" title="AI Suite" description="Custom LLM integrations & intelligent automation." href="#" />
-                <ProductItem emoji="☁️" title="CloudOps" description="Managed cloud infrastructure at enterprise scale." href="#" />
-                <ProductItem emoji="🔐" title="SecureStack" description="Full-stack security audit & hardening service." href="#" />
+                <ProductItem emoji="🚀" title="Launchpad" description="From idea to production-ready MVP in 6 weeks." href="/solutions#launchpad" />
+                <ProductItem emoji="🧠" title="AI Suite" description="Custom LLM integrations & intelligent automation." href="/solutions#ai-suite" />
+                <ProductItem emoji="☁️" title="CloudOps" description="Managed cloud infrastructure at enterprise scale." href="/solutions#cloudops" />
+                <ProductItem emoji="🔐" title="SecureStack" description="Full-stack security audit & hardening service." href="/solutions#securestack" />
               </div>
             </MenuItem>
 
@@ -185,8 +194,8 @@ export default function Navbar({ theme, toggleTheme }) {
                 <HoveredLink to="/about">About Us</HoveredLink>
                 <HoveredLink to="/team">Our Team</HoveredLink>
                 <HoveredLink to="/blog">Blog</HoveredLink>
-                <HoveredLink href="#">Careers</HoveredLink>
-                <HoveredLink href="#">Press Kit</HoveredLink>
+                <HoveredLink to="/careers">Careers</HoveredLink>
+                <HoveredLink to="/press-kit">Press Kit</HoveredLink>
               </div>
             </MenuItem>
 
