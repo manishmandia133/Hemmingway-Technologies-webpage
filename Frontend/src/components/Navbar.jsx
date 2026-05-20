@@ -73,7 +73,7 @@ function useEncrypt(text, active) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const raf = useRef(null);
   useEffect(() => {
-    if (!active) { setDisplay(text); return; }
+    if (!active) return;
     let iter = 0;
     const step = () => {
       setDisplay(text.split('').map((c, i) => c === ' ' ? ' ' : i < iter ? text[i] : chars[Math.floor(Math.random() * chars.length)]).join(''));
@@ -83,7 +83,7 @@ function useEncrypt(text, active) {
     raf.current = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf.current);
   }, [active, text]);
-  return display;
+  return active ? display : text;
 }
 
 function NavLink({ to, label, isActive, onClick }) {
@@ -124,6 +124,13 @@ export default function Navbar({ theme, toggleTheme }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
   const location = useLocation();
+  const [prevPath, setPrevPath] = useState(location.pathname);
+
+  if (location.pathname !== prevPath) {
+    setPrevPath(location.pathname);
+    setMobileOpen(false);
+    setActiveMenu(null);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -131,7 +138,7 @@ export default function Navbar({ theme, toggleTheme }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); setActiveMenu(null); window.scrollTo(0, 0); }, [location.pathname]);
+  useEffect(() => { window.scrollTo(0, 0); }, [location.pathname]);
 
   const isActive = p => location.pathname === p;
 
